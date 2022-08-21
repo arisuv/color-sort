@@ -90,7 +90,11 @@ public class BottleController : MonoBehaviour
 
                 bottleControllerRef.UpdateColorsOnShader();
             }
-
+            // else
+            // {
+            //     myObj1.FirstBottle = null;
+            //     myObj1.SecondBottle = null;
+            // }
 
             CalculateRotationIndex(4 - bottleControllerRef.numberOfColorsInBottle);
 
@@ -210,7 +214,7 @@ public class BottleController : MonoBehaviour
             bottleMaskSR.material.SetFloat("_ScaleAndRotationMultiplaier",
                                              ScaleAndRotationMutiplaierCurve.Evaluate(angleVlaue));
            
-            if(fillAmounts[numberOfColorsInBottle] > FillAmountCurve.Evaluate(angleVlaue))
+            if(fillAmounts[numberOfColorsInBottle] > FillAmountCurve.Evaluate(angleVlaue)  ) //+ 0.005
             {
 
                 if(lineRenderer.enabled == false)
@@ -319,6 +323,10 @@ public class BottleController : MonoBehaviour
                         }
                     }
                  }
+               // if(numberOfTopColorLayer == 4)
+               //  {
+               //      LockBottle();
+               //  }
                     }
       
            else if(numberOfColorsInBottle == 3)
@@ -420,7 +428,7 @@ public class BottleController : MonoBehaviour
         boilingSound.Play();
     }
 
-    private void LockAll() // Can't move more than one bottle in the same time
+    private void LockAll() // Cant move more than one bottle in the same time
     {
        levelbottles =  GameObject.FindGameObjectsWithTag("bottle");
 
