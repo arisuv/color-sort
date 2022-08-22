@@ -54,6 +54,8 @@ public class BottleController : MonoBehaviour
     private GameObject[] levelbottles;
     private GameObject levelbottle;
 
+    private float addedAmount;
+
 
     void Start()
     {
@@ -232,7 +234,9 @@ public class BottleController : MonoBehaviour
 
                 bottleMaskSR.material.SetFloat("_FillAmount", FillAmountCurve.Evaluate(angleVlaue)); // First bottle
 
-                bottleControllerRef.FillUp(FillAmountCurve.Evaluate(lastAngleValue) - FillAmountCurve.Evaluate(angleVlaue));
+                addedAmount = FillAmountCurve.Evaluate(lastAngleValue) - FillAmountCurve.Evaluate(angleVlaue) ;
+
+                bottleControllerRef.FillUp(addedAmount);
             }
 
             t +=  Time.deltaTime * RotaationSpeedMultiplaier.Evaluate(angleVlaue);
@@ -262,7 +266,6 @@ public class BottleController : MonoBehaviour
 
     IEnumerator RotateBottlrBack()
     {
-
         float t = 0f;
         float lerpValue;
         float angleVlaue;
@@ -272,6 +275,7 @@ public class BottleController : MonoBehaviour
 
         while(t < timeToRotate)
         {
+            StartCoroutine(FixAmount());
             lerpValue = t / timeToRotate;
             angleVlaue = Mathf.Lerp(directionMultiplaier * rotationValues[rotationIndex], 0f, lerpValue);
 
@@ -293,7 +297,7 @@ public class BottleController : MonoBehaviour
         transform.eulerAngles = new Vector3(0, 0, angleVlaue);
         bottleMaskSR.material.SetFloat("_ScaleAndRotationMultiplaier",
                                          ScaleAndRotationMutiplaierCurve.Evaluate(angleVlaue));
-   
+
         StartCoroutine(MoveBottleBack());
     }
 
@@ -323,10 +327,6 @@ public class BottleController : MonoBehaviour
                         }
                     }
                  }
-               // if(numberOfTopColorLayer == 4)
-               //  {
-               //      LockBottle();
-               //  }
                     }
       
            else if(numberOfColorsInBottle == 3)
@@ -394,7 +394,7 @@ public class BottleController : MonoBehaviour
 
     private void FillUp(float fillAmounToAdd)
     {
-        bottleMaskSR.material.SetFloat("_FillAmount", bottleMaskSR.material.GetFloat("_FillAmount") + fillAmounToAdd);
+        bottleMaskSR.material.SetFloat("_FillAmount", bottleMaskSR.material.GetFloat("_FillAmount") + fillAmounToAdd - 0.001f);
     }
 
     private void chosenRotationPointAndDirection()
@@ -413,7 +413,7 @@ public class BottleController : MonoBehaviour
 
     IEnumerator LockBottle() // lock bottle when it is full  
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForEndOfFrame();
        
         if(bottleControllerRef.numberOfTopColorLayer == 4 
         && bottleControllerRef.numberOfColorsInBottle == 4)
@@ -444,6 +444,30 @@ public class BottleController : MonoBehaviour
          foreach (GameObject levelbottle in levelbottles) {
             levelbottle.GetComponent<Collider2D>().enabled = true;
         }
+
+    }
+
+    IEnumerator FixAmount() //sometimes during color transfer the transfered amount is not precise so this set it back to exact amount
+    {
+        yield return new WaitForEndOfFrame();
+
+        if( bottleControllerRef.bottleMaskSR.material.GetFloat("_FillAmount") > 0.3f)
+        {
+            bottleControllerRef.bottleMaskSR.material.SetFloat("_FillAmount", 0.51f);
+        }
+               else if( bottleControllerRef.bottleMaskSR.material.GetFloat("_FillAmount") > -0.07f)
+        {
+            bottleControllerRef.bottleMaskSR.material.SetFloat("_FillAmount", 0.195f);
+        }
+               else  if( bottleControllerRef.bottleMaskSR.material.GetFloat("_FillAmount") > -0.385f)
+        {
+           bottleControllerRef.bottleMaskSR.material.SetFloat("_FillAmount", -0.12f);
+        }
+               else if( bottleControllerRef.bottleMaskSR.material.GetFloat("_FillAmount") > -0.70f)
+        {
+            bottleControllerRef.bottleMaskSR.material.SetFloat("_FillAmount", -0.435f);
+        }
+
 
     }
 }

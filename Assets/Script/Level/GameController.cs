@@ -115,7 +115,7 @@ public class GameController : MonoBehaviour
       {
         allFull =true;
 
-        yield return new WaitForSeconds(1.8f);
+        yield return new WaitForSeconds(1f);
        
         Win();
       }

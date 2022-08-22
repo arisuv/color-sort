@@ -348,7 +348,7 @@ MonoBehaviour:
   leftRotationPoint: {fileID: 1434057969048137167}
   rightRotationPoint: {fileID: 1434057967179666482}
   lineRenderer: {fileID: 7650401501837447097, guid: 68c1cb38056844aa88f6e2a023caa3d1, type: 3}
-  timeToRotate: 0.5
+  timeToRotate: 0.3
   boilingSound: {fileID: 4030925162420717852, guid: 366fd6f1fb9604f6ea4c196094f6b87c, type: 3}
 --- !u!61 &1434057968490450131
 BoxCollider2D:
