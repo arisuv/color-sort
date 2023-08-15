@@ -1,4 +1,4 @@
-# ColorSort
+# Colorsort game
 A simple Android game made with Unity enging and C#. 
 
 ## Features
