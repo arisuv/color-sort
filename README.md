@@ -18,10 +18,10 @@ A simple Android game made with Unity enging and C#.
  
 ## Contribution
 - Fork the repository on GitHub
-- Create your feature branch: git checkout -b brach-name
-- Stage your files git add .
-- Commit your changes git commit -m 'comment'
-- Push to the branch git push origin brach-name
+- Create your feature branch: ``` git checkout -b brach-name ```
+- Stage your files ``` git add . ```
+- Commit your changes ``` git commit -m 'comment' ```
+- Push to the branch ``` git push origin brach-name ```
 - Create a new pull request
 
 ## License
